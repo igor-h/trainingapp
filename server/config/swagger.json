@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "Mean Application API",
-      "description": "Mean Application API",
+      "title": "Training Application API",
+      "description": "Training Application API",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"

@@ -4,8 +4,8 @@ export const navigation: FuseNavigation[] = [
     {
         id       : 'admin',
         title    : 'Admin Menu',
-        translate: 'NAV.ADMIN.ADMIN',
-        type     : 'group',
+        translate: 'NAV.ADMIN.TITLE',
+        type     : 'collapsable',
         children : [
             {
                 id       : 'sample',

@@ -16,7 +16,8 @@ if ( environment.hmr )
 {
     if ( module['hot'] )
     {
-        hmrBootstrap(module, bootstrap);
+        hmrBootstrap(module, bootstrap);  //Hot Module Replacement 
+        // https://medium.com/wizardnet972/hot-module-replacement-with-angular-cli-5fc7a3ae4a9c
     }
     else
     {

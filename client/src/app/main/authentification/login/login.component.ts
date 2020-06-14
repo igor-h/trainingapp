@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/shared/services';
 
 @Component({
     selector     : 'login',
@@ -15,6 +16,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit
 {
     loginForm: FormGroup;
+    email: string | null = null;
+    password: string | null = null;
 
     /**
      * Constructor
@@ -26,7 +29,8 @@ export class LoginComponent implements OnInit
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private _authService: AuthService
     )
     {
         // Configure the layout
@@ -63,7 +67,11 @@ export class LoginComponent implements OnInit
         });
     }
 
-    onLogin(){
-        this._router.navigateByUrl('pages/home');
-    }
+    login(): void {
+        const { email, password } = this.loginForm.getRawValue();
+
+        this._authService.login(email!, password!).subscribe(() => {
+          this._router.navigateByUrl('/');
+        });
+      }
 }

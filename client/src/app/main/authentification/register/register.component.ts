@@ -5,6 +5,8 @@ import { takeUntil } from 'rxjs/internal/operators';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { Router } from '@angular/router';
+import { AuthService } from 'app/shared/services';
 
 @Component({
     selector     : 'register',
@@ -22,7 +24,9 @@ export class RegisterComponent implements OnInit, OnDestroy
 
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _router: Router,
+        private _authService: AuthService
     )
     {
         // Configure the layout
@@ -57,7 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.registerForm = this._formBuilder.group({
-            name           : ['', Validators.required],
+            fullname           : ['', Validators.required],
             email          : ['', [Validators.required, Validators.email]],
             password       : ['', Validators.required],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
@@ -81,6 +85,19 @@ export class RegisterComponent implements OnInit, OnDestroy
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+
+    register(): void {
+        if (this.registerForm.invalid) {
+          return;
+        }
+    
+        const { fullname, email, password, passwordConfirm } = this.registerForm.getRawValue();
+    
+        this._authService.register(fullname, email, password, passwordConfirm).subscribe(data => {
+          this._router.navigate(['']);
+        });
+      }
 }
 
 /**

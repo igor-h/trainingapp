@@ -4,6 +4,7 @@ import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { merge, Observable } from 'rxjs';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
@@ -15,6 +16,9 @@ import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationSpanish } from 'app/navigation/i18n/es';
 
+import { User } from './shared/interfaces';
+import { AuthService } from './shared/services';
+
 @Component({
     selector   : 'app',
     templateUrl: './app.component.html',
@@ -22,6 +26,14 @@ import { locale as navigationSpanish } from 'app/navigation/i18n/es';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
+
+    user$: Observable<User | null> = merge(
+        // Init on startup
+        this._authService.me(),
+        // Update after login/register/logout
+        this._authService.getUser()
+      );
+
     fuseConfig: any;
     navigation: any;
 
@@ -48,7 +60,8 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private _authService: AuthService,
     )
     {
         // Get default navigation

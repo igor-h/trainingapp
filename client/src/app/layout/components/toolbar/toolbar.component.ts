@@ -8,6 +8,9 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { User } from 'app/shared/interfaces';
+import { AuthService } from 'app/shared/services';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'toolbar',
@@ -25,6 +28,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+    user: User | null = null;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -39,7 +43,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private _authService: AuthService,
+        private _router: Router
     )
     {
         // Set the defaults
@@ -85,6 +91,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
         ];
 
         this.navigation = navigation;
+
+        this.user = window.user;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -160,4 +168,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
         // Use the selected language for translations
         this._translateService.use(lang.id);
     }
+
+
+    logout(): void {
+        this._authService.signOut();
+        this._router.navigateByUrl('/auth/login');
+    }
+    
 }

@@ -19,6 +19,9 @@
             "dom"
         ],
         "paths": {
+            "@app/*": [
+                "src/app/*"
+            ],
             "@fuse": [
                 "@fuse/"
             ]

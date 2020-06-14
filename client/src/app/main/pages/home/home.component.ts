@@ -12,6 +12,8 @@ import { locale as turkish } from './i18n/es';
 })
 export class HomeComponent
 {
+
+    user: any;
     /**
      * Constructor
      *
@@ -22,5 +24,6 @@ export class HomeComponent
     )
     {
         this._fuseTranslationLoaderService.loadTranslations(english, turkish);
+        this.user = window.user;
     }
 }

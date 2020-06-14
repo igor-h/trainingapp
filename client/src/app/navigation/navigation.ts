@@ -6,14 +6,14 @@ export const navigation: FuseNavigation[] = [
         title    : 'Admin Menu',
         translate: 'NAV.ADMIN.TITLE',
         type     : 'collapsable',
+        icon     : 'lock',
         children : [
             {
                 id       : 'sample',
-                title    : 'Admin',
-                translate: 'NAV.ADMIN.TITLE',
+                title    : 'Config admin',
                 type     : 'item',
-                icon     : 'user',
-                url      : '/admin',
+                icon     : 'lock',
+                url      : '/admin/admin',
             }
         ]
     },

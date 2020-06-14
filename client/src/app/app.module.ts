@@ -30,6 +30,8 @@ import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 // Services
 import { AuthService } from './shared/services';
+import { HomeComponent } from './main/pages/home/home.component';
+import { AuthGuard } from './shared/guards';
 
 export function appInitializerFactory(_authService: AuthService) {
     return () => _authService.checkTheUserOnTheFirstLoad();
@@ -42,11 +44,16 @@ const appRoutes: Routes = [
     },
     {
         path: 'admin',
-        loadChildren: () => import('./main/pages/admin/admin.module').then(m => m.AdminModule),
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
       },
     {
         path        : 'pages',
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    },
+    {
+      path: '',
+      component: HomeComponent,
+      canActivate: [AuthGuard],
     },
     {
         path      : '**',
